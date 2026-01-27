@@ -1,9 +1,9 @@
 import ContentWrapper from "../components/ContentWrapper";
-
+import Header from "../components/Header";
 const Contact = () => {
   return (
     <ContentWrapper>
-      <h1>Contact</h1>
+      <Header text="Contact" />
       <p>Welcome to Gumby's Pizza.</p>
     </ContentWrapper>
   );

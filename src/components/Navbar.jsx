@@ -7,11 +7,11 @@ const Navbar = () => {
       <div className="navbar-brand">Gumby's Pizza</div>
 
       <ul className="navbar-links">
-        <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/menu">Menu</NavLink></li>
-        <li><NavLink to="/order">Order Online</NavLink></li>
-        <li><NavLink to="/contact">Contact</NavLink></li>
-        <li><NavLink to="/apply">Apply</NavLink></li>
+        <p><NavLink to="/">Home</NavLink></p>
+        <p><NavLink to="/menu">Menu</NavLink></p>
+        <p><NavLink to="/order">Order Online</NavLink></p>
+        <p><NavLink to="/contact">Contact</NavLink></p>
+        <p><NavLink to="/apply">Apply</NavLink></p>
       </ul>
     </nav>
   );

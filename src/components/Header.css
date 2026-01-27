@@ -1,0 +1,12 @@
+.header {
+    padding: 20px 0;
+}
+
+.header-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #c00000;
+    /* bold red */
+    margin: 0;
+    letter-spacing: 1px;
+}

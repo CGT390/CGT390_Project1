@@ -1,9 +1,10 @@
 import ContentWrapper from "../components/ContentWrapper";
+import Header from "../components/Header";
 
 const Menu = () => {
   return (
     <ContentWrapper>
-      <h1>Menu</h1>
+      <Header text="Menu" />
       <p>Pizza. Lots of pizza.</p>
     </ContentWrapper>
   );

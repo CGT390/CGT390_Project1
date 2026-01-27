@@ -1,5 +1,6 @@
 # CGT390_Project1 - React + Vite
 
+Github Repo: https://github.com/CGT390/CGT390_Project1
 View at: https://cgt390.github.io/CGT390_Project1/
 
 This project is a React single-page application (SPA) built with **Vite**.  

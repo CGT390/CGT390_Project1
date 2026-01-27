@@ -1,9 +1,10 @@
 import ContentWrapper from "../components/ContentWrapper";
-
+import Header
+ from "../components/Header";
 const Home = () => {
   return (
     <ContentWrapper>
-      <h1>Home</h1>
+      <Header text="Home" />
       <p>Welcome to Gumby's Pizza.</p>
     </ContentWrapper>
   );
