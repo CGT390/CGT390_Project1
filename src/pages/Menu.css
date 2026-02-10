@@ -1,0 +1,406 @@
+.navigation {
+  background-color: #f8f8f8;
+  border-bottom: 2px solid #ddd;
+  padding: 1rem;
+  position: sticky;
+  top: 90px;
+  z-index: 999;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.nav-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.nav-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.nav-button {
+  padding: 0.5rem 1.25rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  color: #333;
+}
+
+.nav-button:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+/* Main Content Styles */
+.main-content {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin: 2rem 0;
+  color: #333;
+}
+
+/* Section Styles */
+.section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.subsection-title {
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem 0;
+  color: #333;
+}
+
+.small-title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Table Styles */
+.menu-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.menu-table tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+.menu-table td {
+  padding: 0.75rem;
+}
+
+.menu-table .size-col {
+  font-weight: bold;
+}
+
+/* Menu Item Styles */
+.menu-item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.menu-item-name {
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.menu-item-desc {
+  margin: 0.25rem 0 0 0;
+  color: #666;
+}
+
+/* Topping Grid */
+.topping-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.topping-item {
+  padding: 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* Text Styles */
+.text-note {
+  font-size: 0.95rem;
+  color: #666;
+  margin-top: 1rem;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.price-large {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0.5rem 0;
+}
+
+.price-medium {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.price-regular {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+/* List Styles */
+.menu-list {
+  list-style: disc;
+  padding-left: 1.5rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.menu-list li {
+  margin-bottom: 0.25rem;
+}
+
+/* Divider */
+.divider {
+  border: none;
+  border-top: 2px solid #ddd;
+  margin: 3rem 0;
+}
+
+/* Disclaimer Box */
+.disclaimer {
+  text-align: center;
+  padding: 2rem;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  margin: 3rem 0;
+}
+
+.disclaimer p {
+  font-size: 0.95rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* Main Content Styles */
+.main-content {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Section Styles */
+.section {
+  margin-bottom: 3rem;
+  scroll-margin-top: 120px; /* Important for accurate scrolling */
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.subsection-title {
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem 0;
+  color: #333;
+}
+
+.small-title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Table Styles */
+.menu-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.menu-table tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+.menu-table td {
+  padding: 0.75rem;
+}
+
+.menu-table .size-col {
+  font-weight: bold;
+}
+
+/* Menu Item Styles */
+.menu-item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.menu-item-name {
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.menu-item-desc {
+  margin: 0.25rem 0 0 0;
+  color: #666;
+}
+
+/* Topping Grid */
+.topping-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.topping-item {
+  padding: 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* Text Styles */
+.text-note {
+  font-size: 0.95rem;
+  color: #666;
+  margin-top: 1rem;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.price-large {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0.5rem 0;
+}
+
+.price-medium {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.price-regular {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+/* List Styles */
+.menu-list {
+  list-style: disc;
+  padding-left: 1.5rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.menu-list li {
+  margin-bottom: 0.25rem;
+}
+
+/* Divider */
+.divider {
+  border: none;
+  border-top: 2px solid #ddd;
+  margin: 3rem 0;
+}
+
+/* Disclaimer Box */
+.disclaimer {
+  text-align: center;
+  padding: 2rem;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  margin: 3rem 0;
+}
+
+.disclaimer p {
+  font-size: 0.95rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .section {
+    scroll-margin-top: 100px;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .subsection-title {
+    font-size: 1.3rem;
+  }
+
+  .nav-buttons {
+    gap: 0.5rem;
+  }
+
+  .nav-button {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .main-content {
+    padding: 0 1rem;
+  }
+
+  .menu-table td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .topping-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    scroll-margin-top: 80px;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .subsection-title {
+    font-size: 1.2rem;
+  }
+
+  .topping-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navigation {
+    position: sticky;
+  }
+}

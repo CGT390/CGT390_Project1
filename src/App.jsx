@@ -1,4 +1,5 @@
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Banner from './components/Banner';
 import { Routes, Route } from "react-router-dom";
 import './App.css';
@@ -11,7 +12,7 @@ import Apply from "./pages/Apply";
 function App() {
   return (
     <>
-      <Banner />
+      {/* <Banner /> */}
       <Navbar />
 
       <Routes>
@@ -21,6 +22,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/apply" element={<Apply />} />
       </Routes>
+
+      <Footer />
     </>
   );
 }

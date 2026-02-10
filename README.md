@@ -31,3 +31,19 @@ npm install
 
 #Then Run 
 npm run dev
+
+---
+
+## 🔧 Checkpoint 2
+
+In this iteration, I added some interactive components like...
+ - A footer
+ - A menu with a 'jump to' section
+ - A rough 'order online' section that allows the user to add things to a 'Cart'
+    - This cart is purely frontend, it doesnt send anything to any backend
+    - re-renders things in the middle menu section depending on what button is selected
+    
+In the future, I plan to...  
+ - make the 'checkout' easier to use, and to add overlays that make it more clear what the user is ordering
+ - Add content for the 'Apply' and the 'Contact' pages
+ - add more CSS and color to the website
