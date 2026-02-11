@@ -13,6 +13,8 @@
   position: sticky;
   top: 6rem;
   height: fit-content;
+    overflow-y: auto;
+
 }
 
 .menu-title {
