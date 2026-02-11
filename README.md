@@ -46,7 +46,7 @@ In this iteration, I added some interactive components like...
     
 In the future, I plan to...  
  - make the 'checkout' easier to use, and to add overlays that make it more clear what the user is ordering, ask for deliver vs pickup 
- - work on fixing small bugs like the left sidebar in order online
+ - work on fixing small bugs 
  - Add better buttons/CSS for the 'Apply' page
  - Add content for the 'Contact' pages
  - add more CSS and color to the website overall
