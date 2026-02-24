@@ -22,7 +22,7 @@ It features a dynamic navbar, a banner, and a content wrapper that updates based
 
 1. **Clone the repository**
 
-```bash
+bash
 git clone <your-repo-link>
 cd CGT390_Project1
 
@@ -34,7 +34,7 @@ npm run dev
 
 ---
 
-## Checkpoint 2
+# Checkpoint 2
 
 In this iteration, I added some interactive components like...
  - A footer
@@ -52,7 +52,7 @@ In the future, I plan to...
  - add more CSS and color to the website overall
 
 
-## Final Checkpoint
+# Final Checkpoint
 
 ##  Scope of Recreation
 
@@ -118,6 +118,5 @@ Navigation from the cart to checkout uses `window.location.hash = "#/checkout"` 
 - Multi-topping support — configurable `maxToppings` per item type (e.g. specialty pies could allow more)
 - Order persistence — save order history to `localStorage` or a backend so users can reference past orders
 - Real checkout integration — connect to a payment processor (Stripe) or order management API
-- Animations — cart add/remove transitions, modal entrance animations
 - Accessibility audit — full keyboard navigation and screen reader support across the order flow
 - Mobile cart drawer — on small screens, replace the sidebar cart with a slide-up drawer triggered by a floating button
