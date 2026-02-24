@@ -5,334 +5,349 @@ import { MENU } from "../data/menu";
 import "./OrderOnline.css";
 
 // Helper components
-const PizzaGroup = ({ title, sizes, addToCart }) => (
-  <div className="menu-group">
-    <h3>{title}</h3>
-    {sizes.map((item) => (
-      <div key={item.size} className="menu-item">
-        <span>{item.size}</span>
-        <div className="menu-right">
-          <span>${item.price.toFixed(2)}</span>
-          <button onClick={() => addToCart({ name: `${title} - ${item.size}`, price: item.price })}>
-            Add
-          </button>
-        </div>
+const ItemRow = ({ name, price, meta, addToCart }) => (
+  <div className="oo-group">
+    <div className="oo-item">
+      <div className="oo-item-left">
+        <p className="oo-item-name">{name}</p>
+        {meta && <p className="oo-item-meta">{meta}</p>}
       </div>
+      <div className="oo-item-right">
+        <span className="oo-item-price">${price.toFixed(2)}</span>
+        <button className="oo-add-btn" onClick={() => addToCart({ name, price, allowToppings: true })}>
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
+const PizzaGroup = ({ title, sizes, addToCart }) => (
+  <div className="oo-group">
+    <p className="oo-group-title">{title}</p>
+    {sizes.map(item => (
+      <ItemRow
+        key={item.size}
+        name={`${title} — ${item.size}`}
+        price={item.price}
+        addToCart={addToCart}
+      />
     ))}
   </div>
 );
 
 const DrinkGroup = ({ label, data, addToCart }) => (
-  <div className="menu-group">
-    <h3>{label} - ${data.price.toFixed(2)}</h3>
-    {data.options.map((option) => (
-      <div key={option} className="menu-item">
-        <span>{option}</span>
-        <button onClick={() => addToCart({ name: `${option} (${label})`, price: data.price })}>
-          Add
-        </button>
-      </div>
+  <div className="oo-group">
+    <p className="oo-group-title">{label} — ${data.price.toFixed(2)}</p>
+    {data.options.map(option => (
+      <ItemRow
+        key={option}
+        name={option}
+        price={data.price}
+        addToCart={addToCart}
+      />
     ))}
   </div>
 );
 
 const SpecialtyPie = ({ name, toppings, sizes, addToCart }) => (
-  <div className="specialty-item">
-    <div className="specialty-header">
-      <strong>{name}</strong>
-      <p className="specialty-toppings">{toppings.join(", ")}</p>
-    </div>
-    <div className="specialty-sizes">
-      {sizes.map((size) => (
+  <div className="oo-specialty-item">
+    <p className="oo-specialty-name">{name}</p>
+    <p className="oo-specialty-toppings">{toppings.join(', ')}</p>
+    <div className="oo-size-btns">
+      {sizes.map(size => (
         <button
           key={size.size}
-          className="size-button"
-          onClick={() => addToCart({ name: `${name} - ${size.size}`, price: size.price })}
+          className="oo-size-btn"
+          onClick={() => addToCart({ name: `${name} — ${size.size}`, price: size.price, allowToppings: true })}
         >
-          {size.size} - ${size.price.toFixed(2)}
+          {size.size} · ${size.price.toFixed(2)}
         </button>
       ))}
     </div>
   </div>
 );
 
+const CATEGORIES = [
+  "Pizza", "Specialty Pies", "Pokey Stix", "Calzones",
+  "Clay Fusions", "Desserts", "Beverages", "Dipping Sauces"
+];
+
 const OrderOnline = () => {
   const [openCategory, setOpenCategory] = useState(null);
   const [cart, setCart] = useState([]);
-
-  const toggleCategory = (cat) => {
-    setOpenCategory(openCategory === cat ? null : cat);
-  };
+  const [toppingItemIndex, setToppingItemIndex] = useState(null);
+  // maxToppings: how many toppings the item allows. Default 1 (radio behavior).
+  // You can store this per-item if needed.
+  const MAX_TOPPINGS = 1;
 
   const addToCart = (item) => {
-    setCart((prev) => [...prev, item]);
+    setCart(prev => [...prev, { ...item, toppings: [] }]);
   };
 
-  const removeFromCart = (index) => {
-    setCart((prev) => prev.filter((_, i) => i !== index));
-  };
+  const removeFromCart = (index) => setCart(prev => prev.filter((_, i) => i !== index));
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  const total = cart.reduce((sum, item) => sum + item.price + (item.toppings?.length || 0), 0);
 
-  // Extract data from MENU
   const { justCheese, oneTopping, toppings, glutenFree } = MENU.Pizza;
   const { sizes: specialtySizes, bestSellers, columbiaFavorites } = MENU.SpecialtyPies;
   const { twoLiter, twentyOz, cans } = MENU.Beverages;
+
+  const openToppingsSelector = (index) => setToppingItemIndex(index);
+  const closeToppingsSelector = () => setToppingItemIndex(null);
+
+  const toggleTopping = (topping) => {
+    setCart(prev => {
+      const newCart = [...prev];
+      const item = { ...newCart[toppingItemIndex] };
+      const current = item.toppings || [];
+
+      if (current.includes(topping)) {
+        // Deselect
+        item.toppings = current.filter(t => t !== topping);
+      } else if (current.length < MAX_TOPPINGS) {
+        // Select if under limit
+        item.toppings = [...current, topping];
+      } else {
+        // At limit: replace the last selected (radio-style for MAX=1)
+        item.toppings = [...current.slice(0, MAX_TOPPINGS - 1), topping];
+      }
+
+      newCart[toppingItemIndex] = item;
+      return newCart;
+    });
+  };
 
   return (
     <ContentWrapper>
       <Header text="Order Online" />
 
-      <div className="order-layout">
-        {/* Categories */}
-        <section className="menu-categories">
-          <h1 className="menu-title">View Our Menu</h1>
-
-          {[
-            "Pizza",
-            "Specialty Pies",
-            "Pokey Stix",
-            "Calzones",
-            "Clay Fusions",
-            "Desserts",
-            "Beverages",
-            "Dipping Sauces"
-          ].map((cat) => (
-            <div key={cat} className="category-card">
-              <button
-                onClick={() => toggleCategory(cat)}
-                className={`category-button ${openCategory === cat ? "active" : ""}`}
-              >
-                {cat}
-              </button>
-            </div>
+      <div className="oo-layout">
+        {/* Sidebar */}
+        <nav className="oo-sidebar">
+          <p className="oo-sidebar-title">Categories</p>
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat}
+              className={`oo-cat-btn${openCategory === cat ? ' active' : ''}`}
+              onClick={() => setOpenCategory(openCategory === cat ? null : cat)}
+            >
+              {cat}
+            </button>
           ))}
-        </section>
+        </nav>
 
-        {/* Items panel */}
-        <section className="menu-items">
-          {!openCategory && (
-            <p className="placeholder-text">
-              Select a category to view items
-            </p>
-          )}
+        {/* Items Panel */}
+        <div className="oo-panel">
+          {!openCategory && <div className="oo-panel-empty">Select a category to view items →</div>}
 
-          {/* Pizza Section */}
           {openCategory === "Pizza" && (
-            <div className="menu-section">
-              <h2>Pizza</h2>
-
-              {/* Just Cheese */}
-              <PizzaGroup
-                title={justCheese.title}
-                sizes={justCheese.sizes}
+            <div className="oo-panel-section">
+              <h2 className="oo-panel-heading">Pizza</h2>
+              <PizzaGroup title={justCheese.title} sizes={justCheese.sizes} addToCart={addToCart} />
+              <PizzaGroup title={oneTopping.title} sizes={oneTopping.sizes} addToCart={addToCart} />
+              <div className="oo-info-box">
+                <strong>Available Toppings</strong> {toppings.available.join(' · ')}
+              </div>
+              <ItemRow
+                name={glutenFree.description}
+                price={glutenFree.price}
+                meta="Gluten-free crust option"
                 addToCart={addToCart}
               />
-
-              {/* Cheese & 1 Topping */}
-              <PizzaGroup
-                title={oneTopping.title}
-                sizes={oneTopping.sizes}
-                addToCart={addToCart}
-              />
-
-              {/* Toppings info */}
-              <div className="toppings-info">
-                <h4>Available Toppings</h4>
-                <p>{toppings.available.join(", ")}</p>
-                <h4 style={{ marginTop: "1rem" }}>Additional Topping Prices</h4>
-                <div className="topping-prices">
-                  {toppings.additionalPricing.map((item) => (
-                    <span key={item.size}>
-                      {item.size}: ${item.price.toFixed(2)}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Gluten Free */}
-              <div className="menu-item">
-                <span>{glutenFree.description}</span>
-                <div className="menu-right">
-                  <span>${glutenFree.price.toFixed(2)}</span>
-                  <button onClick={() => addToCart({ name: glutenFree.description, price: glutenFree.price })}>
-                    Add
-                  </button>
-                </div>
-              </div>
             </div>
           )}
 
-          {/* Specialty Pies Section */}
-          {openCategory === "Specialty Pies" && (
-            <div className="menu-section">
-              <h2>Specialty Pies</h2>
 
-              <div className="specialty-pricing">
-                <h3>Pricing (All Specialty Pies)</h3>
-                {specialtySizes.map((size) => (
-                  <div key={size.size} className="price-item">
-                    <span>{size.size}</span>
-                    <span>${size.price.toFixed(2)}</span>
-                  </div>
+          {openCategory === "Specialty Pies" && (
+            <div className="oo-panel-section">
+              <h2 className="oo-panel-heading">Specialty Pies</h2>
+              <div className="oo-group">
+                <p className="oo-group-title">Best Sellers</p>
+                {bestSellers.map(pie => (
+                  <SpecialtyPie key={pie.name} name={pie.name} toppings={pie.toppings} sizes={specialtySizes} addToCart={addToCart} />
                 ))}
               </div>
-
-              <h3 style={{ marginTop: "2rem" }}>Best Sellers</h3>
-              {bestSellers.map((pie) => (
-                <SpecialtyPie
-                  key={pie.name}
-                  name={pie.name}
-                  toppings={pie.toppings}
-                  sizes={specialtySizes}
-                  addToCart={addToCart}
-                />
-              ))}
-
-              <h3 style={{ marginTop: "2rem" }}>Columbia Favorites</h3>
-              {columbiaFavorites.map((pie) => (
-                <SpecialtyPie
-                  key={pie.name}
-                  name={pie.name}
-                  toppings={pie.toppings}
-                  sizes={specialtySizes}
-                  addToCart={addToCart}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* Pokey Stix Section */}
-          {openCategory === "Pokey Stix" && (
-            <div className="menu-section">
-              <h2>Pokey Stix</h2>
-              <p className="menu-subtitle">{MENU.PokeyStix.name}</p>
-              <PizzaGroup
-                title="Pokey Stix"
-                sizes={MENU.PokeyStix.sizes}
-                addToCart={addToCart}
-              />
-            </div>
-          )}
-
-          {/* Calzones Section */}
-          {openCategory === "Calzones" && (
-            <div className="menu-section">
-              <h2>Calzones</h2>
-              <div className="menu-item">
-                <div>
-                  <strong>{MENU.Calzones.name}</strong>
-                  <p className="item-description">{MENU.Calzones.description}</p>
-                  <p className="item-note">Additional toppings: ${MENU.Calzones.additionalToppingPrice.toFixed(2)} each</p>
-                </div>
-                <div className="menu-right">
-                  <span>${MENU.Calzones.price.toFixed(2)}</span>
-                  <button onClick={() => addToCart({ name: "Calzone", price: MENU.Calzones.price })}>
-                    Add
-                  </button>
-                </div>
+              <div className="oo-group">
+                <p className="oo-group-title">Columbia Favorites</p>
+                {columbiaFavorites.map(pie => (
+                  <SpecialtyPie key={pie.name} name={pie.name} toppings={pie.toppings} sizes={specialtySizes} addToCart={addToCart} />
+                ))}
               </div>
             </div>
-          )}
+          )
+          }
 
-          {/* Clay Fusions Section */}
+          {openCategory === "Pokey Stix" && (
+            <div className="oo-panel-section">
+              <h2 className="oo-panel-heading">Pokey Stix</h2>
+              <PizzaGroup title="Pokey Stix" sizes={MENU.PokeyStix.sizes} addToCart={addToCart} />
+            </div>
+          )
+          }
+
+          {openCategory === "Calzones" && (
+            <div className="oo-panel-section">
+              <h2 className="oo-panel-heading">Calzones</h2>
+              <div className="oo-group">
+                <ItemRow
+                  name={MENU.Calzones.name}
+                  price={MENU.Calzones.price}
+                  meta={`${MENU.Calzones.description} · Extra toppings $${MENU.Calzones.additionalToppingPrice.toFixed(2)} each`}
+                  addToCart={addToCart}
+                />
+              </div>
+            </div>
+          )
+          }
+
           {openCategory === "Clay Fusions" && (
-            <div className="menu-section">
-              <h2>Clay Fusions</h2>
-              <p className="menu-subtitle">{MENU.ClayFusions.description}</p>
-              <PizzaGroup
-                title="Clay Fusion"
-                sizes={MENU.ClayFusions.sizes}
-                addToCart={addToCart}
-              />
+            <div className="oo-panel-section">
+              <h2 className="oo-panel-heading">Clay Fusions</h2>
+              <div className="oo-info-box">
+                <strong>About Clay Fusions</strong>
+                {MENU.ClayFusions.description} · Pizza includes cheese &amp; 1-topping.
+              </div>
+              <PizzaGroup title="Clay Fusion" sizes={MENU.ClayFusions.sizes} addToCart={addToCart} />
             </div>
-          )}
+          )
+          }
 
-          {/* Desserts Section */}
           {openCategory === "Desserts" && (
-            <div className="menu-section">
-              <h2>Desserts</h2>
-              {MENU.Desserts.map((item) => (
-                <div key={item.name} className="menu-item">
-                  <span>{item.name}</span>
-                  <div className="menu-right">
-                    <span>${item.price.toFixed(2)}</span>
-                    <button onClick={() => addToCart(item)}>Add</button>
-                  </div>
-                </div>
-              ))}
+            <div className="oo-panel-section">
+              <h2 className="oo-panel-heading">Desserts</h2>
+              <div className="oo-group">
+                {MENU.Desserts.map(item => (
+                  <ItemRow key={item.name} name={item.name} price={item.price} addToCart={addToCart} />
+                ))}
+              </div>
             </div>
-          )}
+          )
+          }
 
-          {/* Beverages Section */}
           {openCategory === "Beverages" && (
-            <div className="menu-section">
-              <h2>Beverages</h2>
+            <div className="oo-panel-section">
+              <h2 className="oo-panel-heading">Beverages</h2>
               <DrinkGroup label="2-Liter Bottles" data={twoLiter} addToCart={addToCart} />
               <DrinkGroup label="20 oz Drinks" data={twentyOz} addToCart={addToCart} />
               <DrinkGroup label="12 oz Cans" data={cans} addToCart={addToCart} />
             </div>
-          )}
+          )
+          }
 
-          {/* Dipping Sauces Section */}
           {openCategory === "Dipping Sauces" && (
-            <div className="menu-section">
-              <h2>Dipping Sauces</h2>
-              <p className="menu-subtitle">Price: ${MENU.DippingSauces.price.toFixed(2)}</p>
-              {MENU.DippingSauces.options.map((sauce) => (
-                <div key={sauce} className="menu-item">
-                  <span>{sauce}</span>
-                  <button onClick={() => addToCart({ name: `${sauce} Sauce`, price: MENU.DippingSauces.price })}>
-                    Add
-                  </button>
-                </div>
-              ))}
+            <div className="oo-panel-section">
+              <h2 className="oo-panel-heading">Dipping Sauces</h2>
+              <div className="oo-group">
+                {MENU.DippingSauces.options.map(sauce => (
+                  <ItemRow
+                    key={sauce}
+                    name={`${sauce} Sauce`}
+                    price={MENU.DippingSauces.price}
+                    addToCart={addToCart}
+                  />
+                ))}
+              </div>
             </div>
-          )}
-        </section>
+          )
+          }
+        </div >
 
         {/* Cart */}
-        <aside className="cart">
-          <h2 className="cart-title">Your Cart</h2>
+        <aside className="oo-cart">
+          <div className="oo-cart-header">
+            <h2 className="oo-cart-title">Cart</h2>
+            {cart.length > 0 && (
+              <span className="oo-cart-count">{cart.length} item{cart.length !== 1 ? 's' : ''}</span>
+            )}
+          </div>
 
-          {cart.length === 0 ? (
-            <p className="cart-empty">Cart is empty</p>
-          ) : (
-            <>
-              <ul className="cart-list">
-                {cart.map((item, idx) => (
-                  <li key={idx} className="cart-item">
-                    <div className="cart-item-info">
-                      <span className="cart-item-name">{item.name}</span>
-                      <span className="cart-item-price">${item.price.toFixed(2)}</span>
+          <div className="oo-cart-body">
+            {cart.length === 0 ? (
+              <p className="oo-cart-empty">Your cart is empty</p>
+            ) : (
+              cart.map((item, idx) => (
+                <div key={idx} className="oo-cart-item">
+                  {/* Row 1: name + price + remove button */}
+                  <div className="oo-cart-item-row">
+                    <div className="oo-cart-item-info">
+                      <p className="oo-cart-item-name">{item.name}</p>
+                      <p className="oo-cart-item-price">
+                        ${(item.price + (item.toppings?.length || 0)).toFixed(2)}
+                      </p>
+                      {item.toppings?.length > 0 && (
+                        <p className="oo-cart-item-toppings">+ {item.toppings.join(', ')}</p>
+                      )}
                     </div>
-                    <button 
-                      className="remove-button"
+                    <button
+                      className="oo-cart-remove"
                       onClick={() => removeFromCart(idx)}
                       aria-label="Remove item"
+                    >×</button>
+                  </div>
+
+                  {/* Row 2: Add Toppings button (below item info) */}
+                  {item.allowToppings && (
+                    <button
+                      className="oo-add-toppings-btn"
+                      onClick={() => openToppingsSelector(idx)}
                     >
-                      ×
+                      {item.toppings?.length > 0 ? '✏ Edit Topping' : '+ Add Topping'}
                     </button>
-                  </li>
-                ))}
-              </ul>
+                  )}
+                </div>
+              ))
+            )}
+          </div>
 
-              <hr className="cart-divider" />
-
-              <div className="cart-total">
-                <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+          {/* Toppings Overlay */}
+          {toppingItemIndex !== null && (
+            <div className="oo-toppings-overlay" onClick={closeToppingsSelector}>
+              <div className="oo-toppings-selector" onClick={e => e.stopPropagation()}>
+                <h3>Choose a Topping</h3>
+                <p className="oo-toppings-hint">Select up to {MAX_TOPPINGS} topping</p>
+                {toppings.available.map(topping => {
+                  const isChecked = cart[toppingItemIndex]?.toppings?.includes(topping);
+                  return (
+                    <label key={topping} className="oo-topping-label">
+                      <input
+                        type="radio"
+                        name="topping-pick"
+                        checked={isChecked}
+                        onChange={() => toggleTopping(topping)}
+                      />
+                      {topping}
+                    </label>
+                  );
+                })}
+                <button className="oo-toppings-done" onClick={closeToppingsSelector}>Done</button>
               </div>
+            </div>
+          )}
 
-              <button className="checkout-button">
+          {cart.length > 0 && (
+            <div className="oo-cart-footer">
+              <div className="oo-cart-total">
+                <span className="oo-cart-total-label">Total</span>
+                <span className="oo-cart-total-amount">${total.toFixed(2)}</span>
+              </div>
+              <button
+                className="oo-checkout-btn"
+                onClick={() => {
+                  localStorage.setItem("cart", JSON.stringify(cart));
+                  window.location.hash = "#/checkout";
+                }}
+              >
                 Checkout
               </button>
-            </>
+            </div>
           )}
         </aside>
       </div>
-    </ContentWrapper>
+    </ContentWrapper >
   );
 };
 
 export default OrderOnline;
+
+

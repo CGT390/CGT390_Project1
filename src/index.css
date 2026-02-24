@@ -1,70 +1,128 @@
+/* =============================================
+   GUMBY'S PIZZA — DESIGN SYSTEM
+   Late-night college town pizza joint aesthetic
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap');
+
+/* ---- Design Tokens ---- */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 500;
-  color-scheme: light dark;
-  color: #242424;
-  background-color: rgba(255, 255, 255, 0.87);
+  /* Colors */
+  --color-bg:          #0f0d0b;
+  --color-surface:     #1a1713;
+  --color-surface-2:   #252118;
+  --color-border:      #332e25;
+  --color-red:         #d63c2a;
+  --color-red-hover:   #e8503c;
+  --color-orange:      #e8843a;
+  --color-text:        #f0ebe3;
+  --color-text-muted:  #9e9281;
+  --color-text-dim:    #6b6050;
+  --color-white:       #fff;
+
+  /* Typography */
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-body:    'DM Sans', 'Helvetica Neue', sans-serif;
+
+  /* Spacing */
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.6);
+
+  /* Transitions */
+  --transition: 0.2s ease;
+
+  font-family: var(--font-body);
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--color-text);
+  background-color: var(--color-bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #ff6464;
-  text-decoration: inherit;
+/* ---- Reset ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-a:hover {
-  color: #f29853;
-}
-
-body {
+html, body {
   margin: 0;
-  place-items: center;
-  min-width: 320px;
+  padding: 0;
   min-height: 100vh;
+  min-width: 320px;
 }
 
-h1 {
-  font-size: 3.2em;
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+p {
+  margin: 0;
+}
+
+ul, ol {
+  padding: 0;
+  margin: 0;
+}
+
+/* ---- Global Link Style ---- */
+a {
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  color: var(--color-orange);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--color-red-hover);
+}
+
+/* ---- Global Button Style ---- */
+button {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all var(--transition);
+  border: none;
+  border-radius: var(--radius-sm);
 }
 
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 2px solid var(--color-orange);
+  outline-offset: 2px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
+/* ---- Utility ---- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
 }

@@ -5,6 +5,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
+        <div className="footer-brand">Gumby's Pizza</div>
         <p className="footer-phone">
           <a href="tel:15738748629">573-874-8629</a>
         </p>
@@ -19,6 +20,7 @@ const Footer = () => {
           <a href="https://order.online/business/gumbys-pizza-206654">DoorDash</a>
           <a href="https://gumbyscolumbia.com/contact/">Contact</a>
         </div>
+        <hr className="footer-divider" />
         <p className="footer-copyright">
           © 2026 Gumby's Pizza Columbia, MO
         </p>

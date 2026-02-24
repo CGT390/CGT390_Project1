@@ -8,8 +8,12 @@ import Menu from "./pages/Menu";
 import OrderOnline from "./pages/OrderOnline";
 import Contact from "./pages/Contact";
 import Apply from "./pages/Apply";
+import Checkout from './pages/Checkout';
+import { useState } from 'react';
 
 function App() {
+  const [cart, setCart] = useState([]);
+  const clearCart = () => setCart([]);
   return (
     <>
       {/* <Banner /> */}
@@ -21,6 +25,8 @@ function App() {
         <Route path="/order" element={<OrderOnline />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/apply" element={<Apply />} />
+        <Route path="/checkout" element={<Checkout cart={cart} clearCart={clearCart} />} />
+
       </Routes>
 
       <Footer />

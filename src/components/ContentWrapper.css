@@ -1,5 +1,14 @@
+/* ---- Content Wrapper ---- */
 .page-wrapper {
-  max-width: 100%;
-  margin: 0 20px;
-  padding: 20px;
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 2rem 4rem;
+}
+
+@media (max-width: 768px) {
+  .page-wrapper {
+    padding: 1.5rem 1rem 3rem;
+  }
 }
